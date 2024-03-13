@@ -1,0 +1,23 @@
+<launch>
+
+    <node
+        pkg="joy"
+        type="joy_node"
+        name="joy_node"
+    />
+
+    <node
+        pkg="teleop_twist_joy"
+        type="teleop_node"
+        name="teleop_twist_joy_node"
+    />
+
+    <include
+        file="$(find kinova_gen3_6dof_robotiq_2f_85_moveit_config)/launch/robot.launch.py"
+    >
+        <arg name="robot_ip" value="192.168.2.10" />
+	<arg name="use_fake_hardware" value="true" />
+    </include>
+
+</launch>
+
