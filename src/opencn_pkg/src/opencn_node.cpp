@@ -5,11 +5,13 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joy.hpp"
+#include "opencn_communication_interfaces/srv/pins.hpp"
 
 #include <capnp/ez-rpc.h>
 
 #include "opencn_pkg/component_specific.h"
 #include "opencn_pkg/transaction.h"
+
 
 #define DEFAULT_IP_PORT 7002
 
@@ -28,12 +30,117 @@ class OpencnPkg : public rclcpp::Node
 
 public:
     OpencnPkg() : Node("opencn_pkg") {
-        joy_subscriber = this->create_subscription<sensor_msgs::msg::Joy>(
-      "joy", 10, std::bind(&OpencnPkg::joy_callback, this, std::placeholders::_1));
+        //joy_subscriber = this->create_subscription<sensor_msgs::msg::Joy>(
+      //"joy", 10, std::bind(&OpencnPkg::joy_callback, this, std::placeholders::_1));
+
+        pins_service = this->create_service<opencn_communication_interfaces::srv::Pins>("opencn_pins",
+            std::bind(&OpencnPkg::pins_callback, this, std::placeholders::_1, std::placeholders::_2));
     }
 
 private:
+    /*
+    Pin :
+        uint8 pin_class
+        uint8 CMPINL32=0
+        uint8 CMPINU32=1
+        uint8 CMPINBIT=2
+        uint8 CMPINFLOAT=3
 
+        CMPinl32 cmpinl32
+        CMPinU32 cmpinu32
+        CMPinBit cmpinbit
+        CMPinFloat cmpinfloat
+
+        string name
+
+        uint8 transaction_type
+        uint8 GET=0
+        uint8 SET=1
+    */
+
+    void pins_callback(const std::shared_ptr<opencn_communication_interfaces::srv::Pins::Request> request,
+                       const std::shared_ptr<opencn_communication_interfaces::srv::Pins::Response> response) const
+    {
+        // Copy pins
+        response->pins = request->pins;
+        RCLCPP_INFO(this->get_logger(), "====Request begin====");
+        for(int i = 0; i < request->pins.size(); i++)
+        {
+            // Pin number
+            RCLCPP_INFO(this->get_logger(), "==Pin%d", i);
+            // pin name 
+            RCLCPP_INFO(this->get_logger(), "Name: %s", request->pins[i].name.c_str());
+            // Pin class
+            if (request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINL32)
+            {
+                RCLCPP_INFO(this->get_logger(), "Pin class: CMPINL32");
+            }
+            else if (request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINU32)
+            {
+                RCLCPP_INFO(this->get_logger(), "Pin class: CMPINU32");
+            }
+            else if (request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINBIT)
+            {
+                RCLCPP_INFO(this->get_logger(), "Pin class: CMPINBIT");
+            }
+            else if (request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINFLOAT)
+            {
+                RCLCPP_INFO(this->get_logger(), "Pin class: CMPINFLOAT");
+            }
+            // Transaction type
+            if (request->pins[i].transaction_type == opencn_communication_interfaces::msg::Pin::GET)
+            {
+                RCLCPP_INFO(this->get_logger(), "Transaction type: GET");
+
+                // Set value
+                if(request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINL32)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Type CMPINL32");
+                    response->pins[i].cmpinl32.value = 41;
+                }
+                else if(request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINU32)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Type CMPINU32");
+                    response->pins[i].cmpinu32.value = 41;
+                }
+                else if(request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINBIT)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Type CMPINBIT");
+                    response->pins[i].cmpinbit.value = true;
+                }
+                else if(request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINFLOAT)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Type CMPINFLOAT");
+                    response->pins[i].cmpinfloat.value = 41.41;
+                }
+            }
+            else if (request->pins[i].transaction_type == opencn_communication_interfaces::msg::Pin::SET)
+            {
+                RCLCPP_INFO(this->get_logger(), "Transaction type: SET");
+
+                // Value
+                if(request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINL32)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Value: %d", request->pins[i].cmpinl32.value);
+                }
+                else if(request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINU32)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Value: %d", request->pins[i].cmpinu32.value);
+                }
+                else if(request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINBIT)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Value: %d", request->pins[i].cmpinbit.value);
+                }
+                else if(request->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINFLOAT)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Value: %f", request->pins[i].cmpinfloat.value);
+                }
+            }           
+        }
+        RCLCPP_INFO(this->get_logger(), "====Request end====");
+        response->success = true;
+    }
+/*
     void joy_callback(const sensor_msgs::msg::Joy & msg) const
     {
         // Print buttons status
@@ -46,8 +153,11 @@ private:
         RCLCPP_INFO(this->get_logger(), "Button RB: %d", msg.buttons[5]);
         RCLCPP_INFO(this->get_logger(), "Button status, end");
     }
+    */
 
-    rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_subscriber;
+    //rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_subscriber;
+
+    rclcpp::Service<opencn_communication_interfaces::srv::Pins>::SharedPtr pins_service;
 
 
 };

@@ -11,6 +11,7 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(opencn_communication_interfaces REQUIRED)
 
 # Add the following line to find capnproto if not already included
 find_library(CAPNPROTO_RPC_LIBRARY NAMES capnp-rpc-0.7.0 PATHS /usr/local/lib)
@@ -24,7 +25,7 @@ add_executable(opencn_node
   src/transaction.cpp
   src/opencn_interface.capnp.c++
   ) 
-ament_target_dependencies(opencn_node rclcpp std_msgs sensor_msgs)
+ament_target_dependencies(opencn_node rclcpp std_msgs sensor_msgs opencn_communication_interfaces)
 
 # Inclure le répertoire où se trouvent vos fichiers d'en-tête
 target_include_directories(opencn_node PUBLIC
