@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
     std::vector<opencn_communication_interfaces::msg::Pin> pins;
 
     opencn_communication_interfaces::msg::Pin pin1;
-    pin1.pin_class = opencn_communication_interfaces::msg::Pin::CMPINL32;
-    pin1.cmpinl32.value = 42;
-    pin1.name = "CMPinl32 test pin";
+    pin1.pin_class = opencn_communication_interfaces::msg::Pin::CMPINI32;
+    pin1.cmpini32.value = 42;
+    pin1.name = "CMPini32 test pin";
     pin1.transaction_type = opencn_communication_interfaces::msg::Pin::SET;
     pins.push_back(pin1);
 
@@ -63,8 +63,8 @@ int main(int argc, char *argv[])
                 if (result.pins[i].transaction_type == opencn_communication_interfaces::msg::Pin::GET) {
                     // Print the value of the pin depending on its class
                     switch (result.pins[i].pin_class) {
-                        case opencn_communication_interfaces::msg::Pin::CMPINL32:
-                            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "CMPINL32 pin value: %d", result.pins[i].cmpinl32.value);
+                        case opencn_communication_interfaces::msg::Pin::CMPINI32:
+                            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "CMPINI32 pin value: %d", result.pins[i].cmpini32.value);
                             break;
                         case opencn_communication_interfaces::msg::Pin::CMPINU32:
                             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "CMPINU32 pin value: %d", result.pins[i].cmpinu32.value);

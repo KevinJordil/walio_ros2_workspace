@@ -16,7 +16,7 @@ find_package(rclcpp_components REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CMPinBit.msg"
   "msg/CMPinFloat.msg"
-  "msg/CMPinl32.msg"
+  "msg/CMPinI32.msg"
   "msg/CMPinU32.msg"
   "msg/Pin.msg"
   "srv/Pins.srv"
