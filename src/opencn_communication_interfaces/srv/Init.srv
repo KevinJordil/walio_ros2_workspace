@@ -1,0 +1,6 @@
+string ip_address
+uint32 port
+
+string device
+---
+bool success
