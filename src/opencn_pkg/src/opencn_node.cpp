@@ -14,18 +14,6 @@
 #include "opencn_pkg/transaction.h"
 
 
-#define DEFAULT_IP_PORT 7002
-
-unsigned int Lcec_epos4::_numLcec = 0;
-
-/*Function prototypes*/
-static void sleep_ms(int time);
-static void show_usage(std::string name);
-int main_menu(Lcec_epos4 *epos4, MuxNTo1F *mux, SimplePG *simple_pg);
-int ppm_menu(Lcec_epos4 *epos4, MuxNTo1F *mux, SimplePG *simple_pg);
-int transactions_test(capnp::EzRpcClient *client);
-int transactions_pins_test(capnp::EzRpcClient *client);
-
 class OpencnPkg : public rclcpp::Node
 {
 
