@@ -23,7 +23,7 @@ Dans un premier temps, il est necessaire d'installer ROS2 Humble. La documentati
 
 Pour installer les dépendances, il faut lancer les commandes suivantes :
     
-```console
+```bash
 sudo rosdep init
 rosdep update
 rosdep install --from-paths src -y --ignore-src
@@ -35,7 +35,7 @@ rosdep install --from-paths src -y --ignore-src
 
 Il est necessaire d'installer la version 0.7.0 de Capnp. Pour cela, il faut suivre les instructions suivantes :
 
-```console
+```bash
 sudo apt update
 sudo apt install build-essential autoconf automake libtool
 curl -O https://capnproto.org/capnproto-c++-0.7.0.tar.gz
@@ -48,7 +48,7 @@ sudo make install
 
 Désormais la version 0.7.0 de Capnp est installée. Voici la commande pour vérifier la version de Capnp :
 
-```console
+```bash
 capnp --version
 ```
 
@@ -64,7 +64,7 @@ Pour compiler, il faut se placer dans le workspace et lancer la commande `colcon
 
 Il est maintenant necessaire de sourcer l'environnement ROS2. Pour cela, il faut lancer la commande suivante :
 
-```console
+```bash
 source install/setup.bash
 ```
 
