@@ -201,6 +201,13 @@ private:
     void joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg) const
     {
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Joy callback");
+        // Print the axes and buttons
+        for (size_t i = 0; i < msg->axes.size(); i++) {
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Axis %ld: %f", i, msg->axes[i]);
+        }
+        for (size_t i = 0; i < msg->buttons.size(); i++) {
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Button %ld: %d", i, msg->buttons[i]);
+        }
     }
     rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub;
 
@@ -222,16 +229,16 @@ int main(int argc, char *argv[])
 
     auto node = std::make_shared<MotionControlNode>();
 
-    node->call_init_service();
+    //node->call_init_service();
 
-    //rclcpp::spin(node);
+    rclcpp::spin(node);
 
     // ros sleep 2 seconds
-    rclcpp::sleep_for(std::chrono::seconds(2));
+    //rclcpp::sleep_for(std::chrono::seconds(2));
 
-    node->call_set_loopback_service();
+    //node->call_set_loopback_service();
 
-    node->cal_get_loopback_service();
+    //node->cal_get_loopback_service();
 
     rclcpp::shutdown();
 
