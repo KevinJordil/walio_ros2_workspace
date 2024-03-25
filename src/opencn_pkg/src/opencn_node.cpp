@@ -4,7 +4,6 @@
 #include <thread>
 
 #include "rclcpp/rclcpp.hpp"
-#include "sensor_msgs/msg/joy.hpp"
 #include "opencn_communication_interfaces/srv/pins.hpp"
 #include "opencn_communication_interfaces/srv/init.hpp"
 
@@ -13,6 +12,7 @@
 #include "opencn_pkg/component_specific.h"
 #include "opencn_pkg/transaction.h"
 
+unsigned int Lcec_epos4::_numLcec = 0;
 
 class OpencnPkg : public rclcpp::Node
 {

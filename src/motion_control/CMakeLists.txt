@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(opencn_communication_interfaces REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
@@ -18,7 +19,7 @@ find_package(opencn_communication_interfaces REQUIRED)
 add_executable(motion_control_node
   src/motion_control_node.cpp
 )
-ament_target_dependencies(motion_control_node rclcpp opencn_communication_interfaces)
+ament_target_dependencies(motion_control_node rclcpp sensor_msgs opencn_communication_interfaces)
 
 install(TARGETS motion_control_node
   DESTINATION lib/${PROJECT_NAME})
