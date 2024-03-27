@@ -3,6 +3,8 @@ name: Sphinx documentation
 on:
   push:
     branches: [main] # branch to trigger deployment
+    paths:
+        - docs/**
 
 permissions:
   contents: write
