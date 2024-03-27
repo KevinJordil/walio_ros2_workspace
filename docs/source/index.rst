@@ -1,10 +1,5 @@
-.. Walio ROS2 Workspace documentation master file, created by
-   sphinx-quickstart on Wed Mar 27 17:49:49 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Bienvenue sur la documentation de Walio ROS2 Workspace
-======================================================
+Documentation de Walio ROS2 Workspace
+=====================================
 
 Cette documentation explique comment utiliser le workspace ROS2 de Walio.
 Ce projet a été réalisé dans le cadre dans projet d'appronfondissement du master HES-SO, semestre de printemps 2024.
@@ -16,9 +11,12 @@ Cet environnement ROS2 est prévu pour être utilisé sur une jetson orin avec U
 - Le bras robotique est connecté à la jetson orin via un cable réseau et une connexion ethernet.
 - Le controleur est connecté à la jetson orin via un cable USB.
 
-Contents
---------
+Contenu
+-------
 
 .. toctree::
-   installation
-   usage
+   prerequis
+   compilation
+   utilisation
+   architecture
+   packages

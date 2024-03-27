@@ -1,5 +1,5 @@
-Utilisation
-=====
+Compilation
+===========
 
 Il est maintenant necessaire de sourcer l'environnement ROS2. Pour cela, il faut lancer la commande suivante :
 
