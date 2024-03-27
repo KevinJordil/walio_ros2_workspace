@@ -40,7 +40,7 @@ target_link_libraries(opencn_node capnp-rpc-0.7.0 capnp-0.7.0)
 target_link_libraries(opencn_node kj-async-0.7.0 kj-0.7.0)
 
 # Lier la bibliothèque .so à votre exécutable
-target_link_libraries(opencn_node ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcmctl-client.so)
+# target_link_libraries(opencn_node ${CMAKE_CURRENT_SOURCE_DIR}/lib/libcmctl-client.so)
 
 install(TARGETS opencn_node
   DESTINATION lib/${PROJECT_NAME})
