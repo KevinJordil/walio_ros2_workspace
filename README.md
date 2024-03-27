@@ -31,20 +31,30 @@ rosdep install --from-paths src -y --ignore-src
 
 ### Capnp
 
-**TODO TESTER !!**
-
 Il est necessaire d'installer la version 0.7.0 de Capnp. Pour cela, il faut suivre les instructions suivantes :
 
 ```bash
 sudo apt update
+sudo apt remove capnproto
+sudo rm -rf /usr/local/bin/capnp
+sudo rm -rf /usr/local/include/capnp
+sudo rm -rf /usr/local/lib/libcapnp*
+sudo rm -rf /usr/local/pkgconfig/capnp*
+```
+
+```bash
+sudo apt update
 sudo apt install build-essential autoconf automake libtool
-curl -O https://capnproto.org/capnproto-c++-0.7.0.tar.gz
-tar zxf capnproto-c++-0.7.0.tar.gz
-cd capnproto-c++-0.7.0
+wget https://github.com/capnproto/capnproto/archive/v0.7.0.tar.gz
+tar xvzf v0.7.0.tar.gz
+cd capnproto-0.7.0/
+autoreconf -i
 ./configure
 make -j6 check
 sudo make install
 ```
+
+Il est possible que les tests ne passent pas lors de la commande `make -j6 check`, ce n'est pas grave, l'installation fonctionne ensuite.
 
 Désormais la version 0.7.0 de Capnp est installée. Voici la commande pour vérifier la version de Capnp :
 
