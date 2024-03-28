@@ -1,6 +1,11 @@
-name: ROS 2 CI
+name: Build ROS2 workspace
+
 on:
   push:
+    branches: [main] # branch to trigger deployment
+    paths:
+        - src/**
+
 jobs:
   build:
     name: Build ROS2 workspace
@@ -30,5 +35,3 @@ jobs:
 
       - name: Build ROS2 workspace
         uses: ichiro-its/ros2-ws-action/build@v1.0.1
-        with:
-          distro: humble
