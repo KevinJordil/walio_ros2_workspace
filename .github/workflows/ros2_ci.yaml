@@ -11,17 +11,10 @@ jobs:
         with:
           path: .
 
-      - name: Install dependencies
+      - name: Install Cap'n Proto 0.7.0
         run: |
           sudo apt-get update
-          sudo apt install build-essential autoconf automake libtool
-          wget https://github.com/capnproto/capnproto/archive/v0.7.0.tar.gz
-          tar xvzf v0.7.0.tar.gz
-          cd capnproto-0.7.0/c++
-          autoreconf -i
-          ./configure
-          make -j6 check
-          sudo make install
+          sudo apt install libcapnp-0.7.0
 
       - name: Build and test workspace
         uses: ichiro-its/ros2-ws-action@v1.0.1
