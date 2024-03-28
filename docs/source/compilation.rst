@@ -6,7 +6,7 @@ Pour cela, il faut lancer la commande suivante :
 
 .. code-block:: bash
 
-    source /opt/ros/foxy/setup.bash	
+    source /opt/ros/humble/setup.bash	
 
 Il peut être intéressant de rajouter cette commande dans le fichier `.bashrc` pour ne pas avoir à la lancer à chaque fois.
 
