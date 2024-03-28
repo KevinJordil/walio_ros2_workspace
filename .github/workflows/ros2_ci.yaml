@@ -12,6 +12,6 @@ jobs:
           path: .
 
       - name: Build and test workspace
-        uses: ichiro-its/ros2-ws-action@v1.0.0
+        uses: ichiro-its/ros2-ws-action@v1.0.1
         with:
           distro: humble
