@@ -35,18 +35,16 @@ Installer la version 0.7.0 de Capnp :
 
 .. code-block:: bash
 
-    sudo apt update
+    sudo apt-get update
     sudo apt install build-essential autoconf automake libtool
     wget https://github.com/capnproto/capnproto/archive/v0.7.0.tar.gz
     tar xvzf v0.7.0.tar.gz
-    cd capnproto-0.7.0/
+    cd capnproto-0.7.0/c++
     autoreconf -i
     ./configure
-    make -j6 check
+    make -j6
     sudo make install
 
-
-Il est possible que les tests ne passent pas lors de la commande `make -j6 check`, ce n'est pas grave, l'installation fonctionne ensuite.
 
 Désormais la version 0.7.0 de Capnp est installée. Voici la commande pour vérifier la version de Capnp :
 
