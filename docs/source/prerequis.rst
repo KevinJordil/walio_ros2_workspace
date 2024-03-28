@@ -5,7 +5,7 @@ ROS2 Humble
 -----------
 
 Dans un premier temps, il est nécessaire d'installer ROS 2 Humble.
-La documentation officielle est disponible [ici](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html#install-ros-2-packages).
+La documentation officielle est disponible `ici <https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html#install-ros-2-packages>`_.
 
 Pour installer les dépendances, il faut lancer les commandes suivantes :
 
