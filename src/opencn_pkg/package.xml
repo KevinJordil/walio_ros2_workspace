@@ -7,6 +7,9 @@
   <maintainer email="kevin.jordil@outlook.com">reds</maintainer>
   <license>Apache-2.0</license>
 
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>std_msgs</depend>
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>opencn_communication_interfaces</depend>
