@@ -8,6 +8,7 @@
   <license>Apache-2.0</license>
 
   <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
 
   <buildtool_depend>rosidl_default_generators</buildtool_depend>
   <exec_depend>rosidl_default_runtime</exec_depend>
