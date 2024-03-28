@@ -18,6 +18,8 @@ extensions = [
     'sphinx.ext.todo',
 ]
 
+todo_include_todos = True
+
 templates_path = ['_templates']
 exclude_patterns = []
 
