@@ -2,8 +2,8 @@ name: ROS 2 CI
 on:
   push:
 jobs:
-  build-and-test:
-    name: Build and Test
+  build:
+    name: Build ROS2 workspace
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,7 +23,12 @@ jobs:
           make -j6
           sudo make install
 
-      - name: Build and test workspace
-        uses: ichiro-its/ros2-ws-action@v1.0.1
+      - name: Setup ROS2 workspace
+        uses: ichiro-its/ros2-ws-action/setup@v1.0.1
+        with:
+          distro: humble
+
+      - name: Build ROS2 workspace
+        uses: ichiro-its/ros2-ws-action/build@v1.0.1
         with:
           distro: humble
