@@ -1,14 +1,30 @@
 Compilation
 ===========
 
-Il est maintenant necessaire de sourcer l'environnement ROS2. Pour cela, il faut lancer la commande suivante :
+Il est maintenant nécessaire de sourcer l'environnement ROS 2.
+Pour cela, il faut lancer la commande suivante :
 
 .. code-block:: bash
 
     source /opt/ros/foxy/setup.bash	
 
+Il peut être intéressant de rajouter cette commande dans le fichier `.bashrc` pour ne pas avoir à la lancer à chaque fois.
 
-Il est maintenant possible de lancer les différents nodes indépendamment. Voici les commandes pour lancer les nodes:
-- Le package OpenCN : `ros2 run opencn_pkg opencn_node`
-- Le package Motion control : `ros2 run motion_control motion_control_node`
-- Le package Joy : `ros2 run joy joy_node`
+Workspace
+---------
+
+Pour compiler, il faut se placer dans le workspace et lancer la commande suivante :
+
+.. code-block:: bash
+
+    colcon build
+
+.. warning::
+    Des avertissements vont apparaître lors de la compilation. Ils sont liés au code source nécessaire à la communication avec OpenCN.
+
+
+Il est également possible de compiler un package en particulier en utilisant la commande suivante :
+
+.. code-block:: bash
+
+    colcon build --packages-select <package_name>

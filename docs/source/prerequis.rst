@@ -4,7 +4,8 @@ Prérequis
 ROS2 Humble
 -----------
 
-Dans un premier temps, il est necessaire d'installer ROS2 Humble. La documentation officielle est disponible [ici](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html#install-ros-2-packages).
+Dans un premier temps, il est nécessaire d'installer ROS 2 Humble.
+La documentation officielle est disponible [ici](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html#install-ros-2-packages).
 
 Pour installer les dépendances, il faut lancer les commandes suivantes :
 
@@ -15,12 +16,15 @@ Pour installer les dépendances, il faut lancer les commandes suivantes :
     rosdep install --from-paths src -y --ignore-src
 
 
-Capnp
------
+Cap'n Proto
+-----------
 
-Il est necessaire d'installer la version 0.7.0 de Capnp. Pour cela, il faut suivre les instructions suivantes :
+Il est nécessaire d'installer la version 0.7.0 de Cap'n Proto.
 
-Désinstaller la version précédente de Capnp :
+Désinstallation de la version précédente
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Voici les commandes pour désinstaller la version précédente de Cap'n Proto :
 
 .. code-block:: bash
 
@@ -31,7 +35,10 @@ Désinstaller la version précédente de Capnp :
     sudo rm -rf /usr/local/lib/libcapnp*
     sudo rm -rf /usr/local/pkgconfig/capnp*
 
-Installer la version 0.7.0 de Capnp :
+Installation de la version 0.7.0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Voici les commandes pour installer la version 0.7.0 de Cap'n Proto :
 
 .. code-block:: bash
 
@@ -46,23 +53,9 @@ Installer la version 0.7.0 de Capnp :
     sudo make install
 
 
-Désormais la version 0.7.0 de Capnp est installée. Voici la commande pour vérifier la version de Capnp :
+Désormais, la version 0.7.0 de Cap'n Proto est installée.
+Voici la commande pour vérifier la version :
 
 .. code-block:: bash
 
     capnp --version
-
-
-Workspace
----------
-
-Ce repertoire est un workspace ROS2. Il est cependant possible de récupérer uniquement les packages voulu dans le dossier `src`.
-
-Pour compiler, il faut se placer dans le workspace et lancer la commande suivante:
-
-.. code-block:: bash
-
-    colcon build
-
-.. warning::
-    Des `warnings` vont apparaitre lors de la compilation. Ils sont liés au code source necessaire à la communication avec opencn.
