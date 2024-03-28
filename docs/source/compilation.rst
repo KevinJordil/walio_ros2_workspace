@@ -19,7 +19,7 @@ Pour compiler, il faut se placer dans le workspace et lancer la commande suivant
 
     colcon build
 
-.. warning::
+.. note::
     Des avertissements vont apparaître lors de la compilation. Ils sont liés au code source nécessaire à la communication avec OpenCN.
 
 
