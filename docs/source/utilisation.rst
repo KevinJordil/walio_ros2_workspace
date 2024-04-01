@@ -25,7 +25,7 @@ Le package Motion control
     ros2 run motion_control motion_control_node
 
 Le package Joy
--------------
+--------------
 
 .. code-block:: bash
 

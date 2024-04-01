@@ -1,3 +1,7 @@
+.. role:: console(code)
+  :language: bash
+  :class: highlight
+
 CI/CD
 =====
 
