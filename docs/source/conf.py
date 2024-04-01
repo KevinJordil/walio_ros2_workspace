@@ -34,10 +34,6 @@ html_static_path = ['_static']
 
 rst_prolog = """
 
-.. role:: console(code)
-  :language: bash
-  :class: highlight
-
 \n.. include:: .special.rst\n
 
 """
