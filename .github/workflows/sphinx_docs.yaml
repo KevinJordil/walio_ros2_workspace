@@ -18,10 +18,11 @@ jobs:
       - name: Install dependencies
         run: |
           pip install sphinx sphinx_rtd_theme myst_parser sphinx-copybutton setuptools sphinxcontrib-images
-      - name: Set French locale
+      - name: Set Swiss french locale
         run: |
           export LC_ALL=fr_FR.UTF-8
           export LANG=fr_FR.UTF-8
+          export TZ=Europe/Zurich
       - name: Sphinx build
         run: |
           sphinx-build docs/source _build
