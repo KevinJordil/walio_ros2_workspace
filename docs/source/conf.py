@@ -32,7 +32,7 @@ language = 'fr'
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
-rst_epilog = """
+rst_prolog = """
 
 .. role:: console(code)
   :language: bash
