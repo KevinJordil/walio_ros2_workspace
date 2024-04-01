@@ -18,6 +18,7 @@ release = '1.0.0'
 extensions = [
     'sphinx.ext.todo',
     'sphinx_copybutton',
+    'sphinxcontrib.images',
 ]
 
 todo_include_todos = True

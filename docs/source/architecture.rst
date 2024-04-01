@@ -6,9 +6,11 @@ L'avantage de cette solution est de pouvoir réutiliser facilement les composant
 
 Voici un schéma de l'architecture de la solution :
 
-.. image:: _static/architecture.svg
+.. thumbnail:: _static/architecture.svg
     :alt: Architecture
     :align: center
+
+<br>
 
 ROS amène une notion de nœud qui est un processus qui communique avec les autres nœuds.
 Dans notre cas, chaque :blue:`composant bleu` est un nœud ROS.
