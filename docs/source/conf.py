@@ -43,7 +43,7 @@ html_split_index = False
 html_show_sourcelink = True
 html_show_sphinx = True
 html_show_copyright = True
-html_last_updated_fmt = u"%d %m %Y, avec ♥"
+html_last_updated_fmt = u"%d %B %Y, avec ♥"
 
 rst_prolog = """
 \n.. include:: .special.rst\n
