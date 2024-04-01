@@ -46,7 +46,5 @@ html_show_copyright = True
 html_last_updated_fmt = u"%d %m %Y, avec ♥"
 
 rst_prolog = """
-
 \n.. include:: .special.rst\n
-
 """
