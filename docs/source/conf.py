@@ -42,9 +42,7 @@ html_split_index = False
 html_show_sourcelink = True
 html_show_sphinx = True
 html_show_copyright = True
-html_last_updated_fmt = u"%d %m %Y, %Hh:%Mm:%Ss, avec ♥"
-
-printc("<yellow>[INFO]<white> Using html_last_updated_fmt: <u>{}<U>...".format(html_last_updated_fmt))
+html_last_updated_fmt = u"%d %m %Y, avec ♥"
 
 rst_prolog = """
 
