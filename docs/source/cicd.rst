@@ -1,6 +1,10 @@
 CI/CD
 =====
 
+L'intégration continue (CI) et le déploiement continu (CD) sont des pratiques de développement logiciel qui permettent de vérifier et de valider le code source d'un projet de manière automatique.
+Dans le cadre de ce projet, il y a de l'intégration continue pour le workspace ROS 2.
+Pour la documentation, il y a un l'intégration continue et un déploiement continu.
+
 ROS2 Workspace build
 --------------------
 
