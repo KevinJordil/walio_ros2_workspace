@@ -33,7 +33,7 @@ language = 'fr'
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_css_files = [
-    '_static/hacks.css',
+    'css/hacks.css',
 ]
 html_output_encoding = u"utf-8"
 html_domain_indices = False
