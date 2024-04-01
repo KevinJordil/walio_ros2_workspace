@@ -20,5 +20,4 @@ Contenu
    compilation
    utilisation
    architecture
-   packages
    cicd

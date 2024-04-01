@@ -1,7 +1,3 @@
-.. role:: console(code)
-  :language: bash
-  :class: highlight
-
 Compilation
 ===========
 

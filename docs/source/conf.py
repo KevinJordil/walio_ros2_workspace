@@ -31,3 +31,13 @@ language = 'fr'
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+rst_epilog = """
+
+.. role:: console(code)
+  :language: bash
+  :class: highlight
+
+\n.. include:: .special.rst\n
+
+"""
