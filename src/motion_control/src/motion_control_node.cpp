@@ -50,6 +50,89 @@ public:
             RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call init service");
         }
 
+        // ros sleep 1 seconds
+        rclcpp::sleep_for(std::chrono::seconds(1));
+
+        auto reset_request = std::make_shared<opencn_communication_interfaces::srv::Pins::Request>();
+
+        // Array of Pin
+        std::vector<opencn_communication_interfaces::msg::Pin> reset_request_pins;
+
+        opencn_communication_interfaces::msg::Pin reset_pin;
+        reset_pin.pin_class = opencn_communication_interfaces::msg::Pin::CMPINBIT;
+        reset_pin.cmpinbit.value = 1;
+        reset_pin.name = "lcec.0.EPOS4.fault-reset";
+        reset_pin.transaction_type = opencn_communication_interfaces::msg::Pin::SET;
+        reset_request_pins.push_back(reset_pin);
+
+        reset_request->pins = reset_request_pins;
+
+        while (!pin_client->wait_for_service(std::chrono::seconds(1))) {
+            if (!rclcpp::ok()) {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                return false;
+            }
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Pins service not available, waiting again...");
+        }
+
+        auto reset_future_result = pin_client->async_send_request(reset_request);
+        // Wait for the result.
+
+        if(reset_future_result.valid()){
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service call was successful");
+        } else {
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service call error");
+        }
+
+        // ros sleep 1 seconds
+        rclcpp::sleep_for(std::chrono::seconds(2));
+
+        auto request = std::make_shared<opencn_communication_interfaces::srv::Pins::Request>();
+
+        // Array of Pin
+        std::vector<opencn_communication_interfaces::msg::Pin> request_pins;
+
+        opencn_communication_interfaces::msg::Pin request_pin1;
+        request_pin1.pin_class = opencn_communication_interfaces::msg::Pin::CMPINU32;
+        request_pin1.cmpinu32.value = 1;
+        request_pin1.name = "mux.target.selector";
+        request_pin1.transaction_type = opencn_communication_interfaces::msg::Pin::SET;
+        request_pins.push_back(request_pin1);
+
+        opencn_communication_interfaces::msg::Pin request_pin2;
+        request_pin2.pin_class = opencn_communication_interfaces::msg::Pin::CMPINBIT;
+        request_pin2.cmpinbit.value = 1;
+        request_pin2.name = "simple_pg.enable";
+        request_pin2.transaction_type = opencn_communication_interfaces::msg::Pin::SET;
+        request_pins.push_back(request_pin2);
+
+        opencn_communication_interfaces::msg::Pin request_pin3;
+        request_pin3.pin_class = opencn_communication_interfaces::msg::Pin::CMPINBIT;
+        request_pin3.cmpinbit.value = 1;
+        request_pin3.name = "lcec.0.EPOS4.set-mode-csv";
+        request_pin3.transaction_type = opencn_communication_interfaces::msg::Pin::SET;
+        request_pins.push_back(request_pin3);
+
+        request->pins = request_pins;
+
+        while (!pin_client->wait_for_service(std::chrono::seconds(1))) {
+            if (!rclcpp::ok()) {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                return false;
+            }
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Pins service not available, waiting again...");
+        }
+
+        auto future_result = pin_client->async_send_request(request);
+        // Wait for the result.
+
+        if(future_result.valid()){
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service call was successful");
+        } else {
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service call error");
+        }
+
+
         return true;
     }
 
@@ -198,18 +281,57 @@ public:
 
 private:
     // Joy callback
-    void joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg) const
+    void joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg)
     {
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Joy callback");
-        // Print the axes and buttons
+        if(old_button_status != msg->buttons[0]){
+            auto request = std::make_shared<opencn_communication_interfaces::srv::Pins::Request>();
+
+            // Array of Pin
+            std::vector<opencn_communication_interfaces::msg::Pin> request_pins;
+
+            opencn_communication_interfaces::msg::Pin request_pin1;
+            request_pin1.pin_class = opencn_communication_interfaces::msg::Pin::CMPINFLOAT;
+            request_pin1.cmpinfloat.value = msg->buttons[0] * 50;
+            request_pin1.name = "simple_pg.joint1.cmd-pos";
+            request_pin1.transaction_type = opencn_communication_interfaces::msg::Pin::SET;
+            request_pins.push_back(request_pin1);
+
+            request->pins = request_pins;
+
+            while (!pin_client->wait_for_service(std::chrono::seconds(1))) {
+                if (!rclcpp::ok()) {
+                    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                    return;
+                }
+                RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Pins service not available, waiting again...");
+            }
+
+            auto future_result = pin_client->async_send_request(request);
+            // Wait for the result.
+
+            if(future_result.valid()){
+                RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service call was successful");
+            } else {
+                RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Service call error");
+            }
+
+
+            old_button_status = msg->buttons[0];
+
+
+        }
+        /*
         for (size_t i = 0; i < msg->axes.size(); i++) {
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Axis %ld: %f", i, msg->axes[i]);
         }
         for (size_t i = 0; i < msg->buttons.size(); i++) {
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Button %ld: %d", i, msg->buttons[i]);
         }
+        */
     }
     rclcpp::Subscription<sensor_msgs::msg::Joy>::SharedPtr joy_sub;
+
+    int old_button_status = 0;
 
     // Init service
     rclcpp::Client<opencn_communication_interfaces::srv::Init>::SharedPtr init_client;
@@ -229,7 +351,8 @@ int main(int argc, char *argv[])
 
     auto node = std::make_shared<MotionControlNode>();
 
-    //node->call_init_service();
+    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Call init");
+    node->call_init_service();
 
     rclcpp::spin(node);
 
