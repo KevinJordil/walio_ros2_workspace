@@ -5,12 +5,14 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "opencn_communication_interfaces/srv/pins.hpp"
+#include "opencn_communication_interfaces/srv/params.hpp"
 #include "opencn_communication_interfaces/srv/init.hpp"
 
 #include <capnp/ez-rpc.h>
 
 #include "opencn_pkg/component_specific.h"
 #include "opencn_pkg/transaction.h"
+#include "opencn_pkg/param.h"
 
 unsigned int Lcec_epos4::_numLcec = 0;
 
@@ -24,6 +26,9 @@ public:
         
         init_service = this->create_service<opencn_communication_interfaces::srv::Init>("opencn_init",
             std::bind(&OpencnPkg::init_callback, this, std::placeholders::_1, std::placeholders::_2));
+
+        params_service = this->create_service<opencn_communication_interfaces::srv::Params>("opencn_params",
+            std::bind(&OpencnPkg::params_callback, this, std::placeholders::_1, std::placeholders::_2));
     }
 
 private:
@@ -154,8 +159,87 @@ private:
         response->success = true;
     }
 
+    void params_callback(const std::shared_ptr<opencn_communication_interfaces::srv::Params::Request> request,
+                         const std::shared_ptr<opencn_communication_interfaces::srv::Params::Response> response) const
+    {
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Params callback");
+        // Copy params to response
+        response->params = request->params;
+        // Initialize transactions
+        Transactions transactions(client);
+        // Create an array of openCN params pointer to get results after transactions
+        CMParam *opencn_params[request->params.size()];
+
+        // Define each param
+        for(int i = 0; i < request->params.size(); i++)
+        {
+            auto &param = response->params[i];
+
+            if(param.param_class == opencn_communication_interfaces::msg::Param::CMPARAMI32){
+                CMParamI32 *cmparami32 = new CMParamI32(param.name, client);
+                if(param.transaction_type == opencn_communication_interfaces::msg::Param::SET) {
+                    transactions.add(cmparami32, TransactionType::SET);
+                    *cmparami32 = param.cmparami32.value;
+                } else if (param.transaction_type == opencn_communication_interfaces::msg::Param::GET)
+                    transactions.add(cmparami32, TransactionType::GET);
+                else {
+                    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Invalid transaction type");
+                    response->success = false;
+                    return;
+                }
+                opencn_params[i] = cmparami32;
+            } else if (param.param_class == opencn_communication_interfaces::msg::Param::CMPARAMU32){
+                CMParamU32* cmparamu32 = new CMParamU32(param.name, client);
+                if(param.transaction_type == opencn_communication_interfaces::msg::Param::SET) {
+                    transactions.add(cmparamu32, TransactionType::SET);
+                    *cmparamu32 = param.cmparamu32.value;
+                } else if (param.transaction_type == opencn_communication_interfaces::msg::Param::GET)
+                    transactions.add(cmparamu32, TransactionType::GET);
+                else {
+                    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Invalid transaction type");
+                    response->success = false;
+                    return;
+                }
+                opencn_params[i] = cmparamu32;
+            } else if (param.param_class == opencn_communication_interfaces::msg::Param::CMPARAMBIT){
+                CMParamBit* cmparambit = new CMParamBit(param.name, client);
+                if(param.transaction_type == opencn_communication_interfaces::msg::Param::SET) {
+                    transactions.add(cmparambit, TransactionType::SET);
+                    *cmparambit = param.cmparambit.value;
+                } else if (param.transaction_type == opencn_communication_interfaces::msg::Param::GET)
+                    transactions.add(cmparambit, TransactionType::GET);
+                else {
+                    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Invalid transaction type");
+                    response->success = false;
+                    return;
+                }
+                opencn_params[i] = cmparambit;
+            } else if (param.param_class == opencn_communication_interfaces::msg::Param::CMPARAMFLOAT){
+                CMParamFloat* cmparamfloat = new CMParamFloat(param.name, client);
+                if(param.transaction_type == opencn_communication_interfaces::msg::Param::SET) {
+                    transactions.add(cmparamfloat, TransactionType::SET);
+                    *cmparamfloat = param.cmparamfloat.value;
+                } else if (param.transaction_type == opencn_communication_interfaces::msg::Param::GET)
+                    transactions.add(cmparamfloat, TransactionType::GET);
+                else {
+                    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Invalid transaction type");
+                    response->success = false;
+                    return;
+                }
+                opencn_params[i] = cmparamfloat;
+            } else {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Unknown param class");
+                response->success = false;
+                return;
+            }
+
+        }
+
+    }
+                
     rclcpp::Service<opencn_communication_interfaces::srv::Pins>::SharedPtr pins_service;
     rclcpp::Service<opencn_communication_interfaces::srv::Init>::SharedPtr init_service;
+    rclcpp::Service<opencn_communication_interfaces::srv::Params>::SharedPtr params_service;
     
     capnp::EzRpcClient *client;
 

@@ -20,6 +20,12 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CMPinU32.msg"
   "msg/Pin.msg"
   "srv/Pins.srv"
+  "msg/CMParamBit.msg"
+  "msg/CMParamFloat.msg"
+  "msg/CMParamI32.msg"
+  "msg/CMParamU32.msg"
+  "msg/Param.msg"
+  "srv/Params.srv"
   "srv/Init.srv"
 )
 
