@@ -40,6 +40,8 @@ Un jumper doit être ajouté à la carte Jetson Orin pour activer le mode recove
     :alt: Jumper
     :align: center
 
+|
+
 Installation
 ------------
 
@@ -49,6 +51,9 @@ Utilisez la commande :console:`lsusb` pour vérifier si la carte est reconnue.
 .. thumbnail:: _images/lsusb.png
     :alt: lsusb
     :align: center
+    :scale: 25%
+
+|
 
 Ensuite, lancez le SDK Manager et connectez-vous avec votre compte développeur NVIDIA.
 
@@ -59,17 +64,23 @@ Vous pouvez ensuite sélectionner la version de Jetson Orin.
     :alt: Select Jetson Orin version
     :align: center
 
+|
+
 Ensuite, choisissez la version de Jetpack 6.0.
 
 .. thumbnail:: _images/step1_default.png
     :alt: Select Jetpack 6.0
     :align: center
 
+|
+
 Voici les composants à sélectionner pour la phase 2 de l'installation.
 
 .. thumbnail:: _images/step2.png
     :alt: Step 2
     :align: center
+
+|
 
 Pour les étapes suivantes de l'installation, vous pouvez conserver les options par défaut.
 
