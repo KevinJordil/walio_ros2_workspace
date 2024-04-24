@@ -34,9 +34,11 @@ Un script est présent dans le dossier :console:`scripts` du workspace cloné po
 Il est possible de lancer ce script avec la commande suivante :
 
 .. code-block:: console
+
     chmod +x scripts/uninstall_capnp.sh
 
 .. code-block:: console
+
     ./scripts/uninstall_capnp.sh
 
 Installation de la version 0.7.0
@@ -46,9 +48,11 @@ Un script est présent dans le dossier :console:`scripts` du workspace cloné po
 Il est possible de lancer ce script avec la commande suivante :
 
 .. code-block:: console
+
     chmod +x scripts/install_capnp.sh
 
 .. code-block:: console
+    
     ./scripts/install_capnp.sh
 
 Désormais, la version 0.7.0 de Cap'n Proto est installée.
