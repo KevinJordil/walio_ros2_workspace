@@ -19,7 +19,6 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx_copybutton',
     'sphinxcontrib.images',
-    'sphinxcontrib-scalebybuilder',
 ]
 
 todo_include_todos = True

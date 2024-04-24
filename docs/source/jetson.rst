@@ -39,8 +39,7 @@ Un jumper doit être ajouté à la carte Jetson Orin pour activer le mode recove
 .. image:: _images/jumper.png
     :alt: Jumper
     :align: center
-    :scale-html: 25%
-    :scale-latex: 25%
+    :height: 50px
 
 Installation
 ------------
