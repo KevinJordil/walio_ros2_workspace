@@ -16,6 +16,7 @@ Contenu
 -------
 
 .. toctree::
+   jetson
    prerequis
    compilation
    utilisation
