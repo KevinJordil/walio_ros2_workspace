@@ -36,11 +36,11 @@ Préparation
 
 Un jumper doit être ajouté à la carte Jetson Orin pour activer le mode recovery.
 
-.. thumbnail:: _images/jumper.png
+.. image:: _images/jumper.png
     :alt: Jumper
     :align: center
-
-|
+    :scale-html: 25%
+    :scale-latex: 25%
 
 Installation
 ------------
