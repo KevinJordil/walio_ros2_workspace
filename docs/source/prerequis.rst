@@ -52,7 +52,7 @@ Il est possible de lancer ce script avec la commande suivante :
     chmod +x scripts/install_capnp.sh
 
 .. code-block:: console
-    
+
     ./scripts/install_capnp.sh
 
 Désormais, la version 0.7.0 de Cap'n Proto est installée.
@@ -61,3 +61,19 @@ Voici la commande pour vérifier la version :
 .. code-block:: console
 
     capnp --version
+
+Contrôleur Xbox One
+-------------------
+
+
+Pour pouvoir utiliser un contrôleur Xbox One, vous devez installer le package :console:`xboxdrv`.
+
+Voici la commande pour l'installation :
+
+.. code-block:: console
+
+    sudo apt-get update
+
+.. code-block:: console
+
+    sudo apt-get install xboxdrv
