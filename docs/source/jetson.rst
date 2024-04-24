@@ -36,10 +36,9 @@ Préparation
 
 Un jumper doit être ajouté à la carte Jetson Orin pour activer le mode recovery.
 
-.. image:: _images/jumper.png
+.. thumbnail:: _images/jumper.png
     :alt: Jumper
     :align: center
-    :height: 50px
 
 Installation
 ------------
@@ -50,7 +49,6 @@ Utilisez la commande :console:`lsusb` pour vérifier si la carte est reconnue.
 .. thumbnail:: _images/lsusb.png
     :alt: lsusb
     :align: center
-    :scale: 25%
 
 |
 
