@@ -77,3 +77,5 @@ Voici la commande pour l'installation :
 .. code-block:: console
 
     sudo apt-get install xboxdrv
+
+L'utilisation du contrôleur Xbox One s'effectuera via un câble USB.
