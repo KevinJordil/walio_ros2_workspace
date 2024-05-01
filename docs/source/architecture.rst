@@ -1,10 +1,10 @@
 Architecture
 ============
 
-Une solution générique a été mise en place pour communiquer entre les différents composants.
-L'avantage de cette solution est de pouvoir réutiliser facilement les composants nécessaires pour un autre projet avec peu ou pas d'adaptation.
+Une solution générique a été mise en place pour faciliter la communication entre les divers composants.
+Son principal avantage réside dans sa capacité à permettre une réutilisation aisée des composants dans d'autres projets, avec peu ou pas d'adaptation nécessaire.
 
-Voici un schéma de l'architecture de la solution :
+Ci-dessous, un schéma illustre l'architecture de cette solution :
 
 .. thumbnail:: _static/architecture.svg
     :alt: Architecture
@@ -12,18 +12,17 @@ Voici un schéma de l'architecture de la solution :
 
 |
 
-ROS amène une notion de nœud qui est un processus qui communique avec les autres nœuds.
-Dans notre cas, chaque :blue:`composant bleu` est un nœud ROS.
+ROS introduit le concept de nœud, qui représente un processus capable de communiquer avec d'autres nœuds.
+Dans notre contexte, chaque :blue:`composant bleu` est un nœud ROS.
 
-Les :red:`liens en rouge` sont des topics ROS qui permettent de communiquer entre les nœuds.
-Il y a un subscriber et un publisher pour chaque topic.
+Les :red:`liens en rouge` correspondent à des topics ROS, facilitant la communication entre les nœuds.
+Chaque topic dispose à la fois d'un subscriber et d'un publisher.
 
-Les :purple:`liens en violet` sont des services ROS qui permettent de faire des appels de fonctions entre les nœuds.
-Le sens de la flèche indique le sens de l'appel.
-L'avantage des services est de pouvoir attendre une réponse et donc de savoir si ça a fonctionné ou non.
+Les :purple:`liens en violet` représentent des services ROS, permettant l'appel de fonctions entre les nœuds.
+La direction de la flèche indique le sens de l'appel.
+Les services offrent l'avantage de pouvoir attendre une réponse, offrant ainsi la possibilité de déterminer si l'opération a été un succès ou non.
 
-Les :black:`liens en noir` sont des liens physiques (USB, Ethernet, etc.) qui permettent de communiquer avec les différents composants.
-
+Enfin, :black:`liens en noir` symbolisent les connexions physiques telles que USB, Ethernet, etc., qui permettent la communication avec les différents composants.
 
 Nœud OpenCN
 -----------
@@ -35,19 +34,19 @@ Plus d'informations sur OpenCN sont disponibles sur le `site d'OpenCN <https://o
 Le nœud OpenCN propose deux services pour générer des transactions OpenCN.
 Le premier service nécessite la spécification d'un tableau de pins OpenCN, tandis que le deuxième service requiert un tableau de paramètres.
 Une fois les informations fournies, le nœud OpenCN crée la transaction OpenCN correspondante et la transmet au Raspberry Pi.
-Si la transaction est réalisée avec succès, le service renvoie la valeur booléenne "True" à la console.
+Si la transaction est réalisée avec succès, le service renvoie la valeur booléenne :console:`True` à la console.
 
 Nœud OpenCN communication interface
 -----------------------------------
 
-Le nœud OpenCN communication interface contient les messages necessaire pour communiquer avec le nœud OpenCN.
-Les message ne sont pas directement stockés dans le nœud OpenCN pour permettre une réutilisation facile des messages dans les autres nœuds.
-Si un nœud a besoin de communiquer avec OpenCN, il suffit de définir comme dépendance le nœud OpenCN communication interface.
+Le nœud OpenCN communication interface comprend les messages nécessaires pour échanger des données avec le nœud OpenCN.
+Ces messages ne sont pas directement intégrés dans le nœud OpenCN, afin de faciliter leur réutilisation dans d'autres nœuds.
+Ainsi, pour tout nœud nécessitant une communication avec OpenCN, il suffit de déclarer une dépendance vis-à-vis du nœud OpenCN communication interface.
 
 Service Pins
 ~~~~~~~~~~~~
 
-Le service Pins est une service ROS permettant de transférer plusieurs Pins OpenCN à la fois.
+Le service Pins est un service ROS permettant de transférer plusieurs Pins OpenCN à la fois.
 Structuré comme un tableau d'entrée et de sortie, il prend en entrée des pins OpenCN à envoyer et renvoie en sortie les pins OpenCN reçues, accompagnées d'un booléen indiquant le succès de la transaction.
 
 .. code-block:: console
