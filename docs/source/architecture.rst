@@ -64,6 +64,7 @@ Structuré comme un tableau d'entrée et de sortie, il prend en entrée des pins
 Le message Pin est un message ROS destiné à transmettre les données relatives à une pin OpenCN.
 Il inclut un attribut :console:`pin_class` définissant la classe de la pin (:console:`CMPINI32`, :console:`CMPINU32`, :console:`CMPINBIT` ou, :console:`CMPINFLOAT`), suivi d'une pin de chaque type, seul celui approprié étant utilisé en fonction de la classe.
 Le message comporte également un nom et un champ :console:`transaction_type` pouvant être :console:`GET` ou :console:`SET`.
+Le message contient également des constantes qui augmentent la lisibilité du code.
 
 .. code-block:: console
     :caption: msg/Pin.msg
@@ -87,28 +88,28 @@ Le message comporte également un nom et un champ :console:`transaction_type` po
 
 Enfin, chaque classe (:console:`CMPINI32`, :console:`CMPINU32`, :console:`CMPINBIT` ou, :console:`CMPINFLOAT`) est un message contenant une valeur correspondante au type.
 
-:console:`CMPINI32` :
+Message de la classe :console:`CMPINI32` :
 
 .. code-block:: console
     :caption: msg/CMPinI32.msg
 
     int32 value
 
-:console:`CMPINU32` :
+Message de la classe :console:`CMPINU32` :
 
 .. code-block:: console
     :caption: msg/CMPinU32.msg
 
     uint32 value
 
-:console:`CMPINBIT` :
+Message de la classe :console:`CMPINBIT` :
 
 .. code-block:: console
     :caption: msg/CMPinBit.msg
 
     bool value
 
-:console:`CMPINFLOAT` :
+Message de la classe :console:`CMPINFLOAT` :
 
 .. code-block:: console
     :caption: msg/CMPinFloat.msg
@@ -132,6 +133,7 @@ Structuré comme un tableau d'entrée et de sortie, il prend en entrée des para
 Le message Param est un message ROS destiné à transmettre les données relatives à un param OpenCN.
 Il inclut un attribut :console:`param_class` définissant la classe du param (:console:`CMPARAMI32`, :console:`CMPARAMU32`, :console:`CMPARAMBIT` ou, :console:`CMPARAMFLOAT`), suivi d'un param de chaque type, seul celui approprié étant utilisé en fonction de la classe.
 Le message comporte également un nom et un champ :console:`transaction_type` pouvant être :console:`GET` ou :console:`SET`.
+Le message contient également des constantes qui augmentent la lisibilité du code.
 
 .. code-block:: console
     :caption: msg/Param.msg
@@ -155,28 +157,28 @@ Le message comporte également un nom et un champ :console:`transaction_type` po
 
 Enfin, chaque classe (:console:`CMPARAMI32`, :console:`CMPARAMU32`, :console:`CMPARAMBIT` ou, :console:`CMPARAMFLOAT`) est un message contenant une valeur correspondante au type.
 
-:console:`CMParamI32` :
+Message de la classe :console:`CMParamI32` :
 
 .. code-block:: console
     :caption: msg/CMParamI32.msg
 
     int32 value
 
-:console:`CMParamU32` :
+Message de la classe :console:`CMParamU32` :
 
 .. code-block:: console
     :caption: msg/CMParamU32.msg
 
     uint32 value
 
-:console:`CMParamBit` :
+Message de la classe :console:`CMParamBit` :
 
 .. code-block:: console
     :caption: msg/CMParamBit.msg
 
     bool value
 
-:console:`CMParamFloat` :
+Message de la classe :console:`CMParamFloat` :
 
 .. code-block:: console
     :caption: msg/CMParamFloat.msg
