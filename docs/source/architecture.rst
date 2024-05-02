@@ -66,6 +66,7 @@ Il inclut un attribut :console:`pin_class` définissant la classe de la pin (:co
 Le message comporte également un nom et un champ :console:`transaction_type` pouvant être :console:`GET` ou :console:`SET`.
 
 .. code-block:: console
+    :caption: msg/Pin.msg
 
     uint8 pin_class
     uint8 CMPINI32=0
@@ -89,24 +90,28 @@ Enfin, chaque classe (:console:`CMPINI32`, :console:`CMPINU32`, :console:`CMPINB
 :console:`CMPINI32` :
 
 .. code-block:: console
+    :caption: msg/CMPinI32.msg
 
     int32 value
 
 :console:`CMPINU32` :
 
 .. code-block:: console
+    :caption: msg/CMPinU32.msg
 
     uint32 value
 
 :console:`CMPINBIT` :
 
 .. code-block:: console
+    :caption: msg/CMPinBit.msg
 
     bool value
 
 :console:`CMPINFLOAT` :
 
 .. code-block:: console
+    :caption: msg/CMPinFloat.msg
 
     float64 value
 
@@ -117,6 +122,7 @@ Le service Params est une service ROS permettant de transférer plusieurs Params
 Structuré comme un tableau d'entrée et de sortie, il prend en entrée des params OpenCN à envoyer et renvoie en sortie les params OpenCN reçues, accompagnées d'un booléen indiquant le succès de la transaction.
 
 .. code-block:: console
+    :caption: srv/Params.srv
 
     Params[] params
     ---
@@ -128,6 +134,7 @@ Il inclut un attribut :console:`param_class` définissant la classe du param (:c
 Le message comporte également un nom et un champ :console:`transaction_type` pouvant être :console:`GET` ou :console:`SET`.
 
 .. code-block:: console
+    :caption: msg/Param.msg
 
     uint8 param_class
     uint8 CMPARAMI32=0
@@ -151,24 +158,28 @@ Enfin, chaque classe (:console:`CMPARAMI32`, :console:`CMPARAMU32`, :console:`CM
 :console:`CMParamI32` :
 
 .. code-block:: console
+    :caption: msg/CMParamI32.msg
 
     int32 value
 
 :console:`CMParamU32` :
 
 .. code-block:: console
+    :caption: msg/CMParamU32.msg
 
     uint32 value
 
 :console:`CMParamBit` :
 
 .. code-block:: console
+    :caption: msg/CMParamBit.msg
 
     bool value
 
 :console:`CMParamFloat` :
 
 .. code-block:: console
+    :caption: msg/CMParamFloat.msg
 
     float64 value
 
