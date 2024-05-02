@@ -43,6 +43,10 @@ Le nœud OpenCN communication interface comprend les messages nécessaires pour 
 Ces messages ne sont pas directement intégrés dans le nœud OpenCN, afin de faciliter leur réutilisation dans d'autres nœuds.
 Ainsi, pour tout nœud nécessitant une communication avec OpenCN, il suffit de déclarer une dépendance vis-à-vis du nœud OpenCN communication interface.
 
+Pour saisir les définitions suivantes, une compréhension de la structure d'un message ROS est essentielle.
+La documentation disponible à l'adresse suivante explique en détail les interfaces pour les messages et les services : `https://docs.ros.org/en/humble/Concepts/Basic/About-Interfaces.html <https://docs.ros.org/en/humble/Concepts/Basic/About-Interfaces.html>`_.
+De plus, un lien est fourni pour la création de messages ou de services, ce qui facilite la compréhension de leur implémentation : `https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html <https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html>`_.
+
 Service Pins
 ~~~~~~~~~~~~
 
@@ -50,6 +54,7 @@ Le service Pins est un service ROS permettant de transférer plusieurs Pins Open
 Structuré comme un tableau d'entrée et de sortie, il prend en entrée des pins OpenCN à envoyer et renvoie en sortie les pins OpenCN reçues, accompagnées d'un booléen indiquant le succès de la transaction.
 
 .. code-block:: console
+    :caption: srv/Pins.srv
 
     Pin[] pins
     ---
