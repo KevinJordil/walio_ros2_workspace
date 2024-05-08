@@ -2,6 +2,7 @@
 #include <string>
 #include <chrono>
 #include <thread>
+#include <vector>
 
 #include "rclcpp/rclcpp.hpp"
 #include "opencn_communication_interfaces/srv/pins.hpp"
@@ -68,10 +69,11 @@ private:
         // Initialize transactions
         Transactions transactions(client);
         // Create an array of openCN pins pointer to get results after transactions
-        CMPin *opencn_pins[request->pins.size()];
+        std::vector<CMPin*> opencn_pins(request->pins.size());
+        //CMPin *opencn_pins[request->pins.size()];
 
         // Define each pin
-        for(int i = 0; i < request->pins.size(); i++)
+        for(size_t i = 0; i < request->pins.size(); i++)
         {
             auto &pin = response->pins[i];
 
@@ -137,7 +139,7 @@ private:
         transactions.execute();
 
         // Update pin value for GET transaction type from opencn_pins to response
-        for (int i = 0; i < response->pins.size(); i++) {
+        for (size_t i = 0; i < response->pins.size(); i++) {
             if (response->pins[i].transaction_type == opencn_communication_interfaces::msg::Pin::GET) {
                 if(response->pins[i].pin_class == opencn_communication_interfaces::msg::Pin::CMPINI32){
                     response->pins[i].cmpini32.value = ((CMPinI32*)opencn_pins[i])->get();
@@ -168,10 +170,11 @@ private:
         // Initialize transactions
         Transactions transactions(client);
         // Create an array of openCN params pointer to get results after transactions
-        CMParam *opencn_params[request->params.size()];
+        std::vector<CMParam*> opencn_params(request->params.size());
+
 
         // Define each param
-        for(int i = 0; i < request->params.size(); i++)
+        for(size_t i = 0; i < request->params.size(); i++)
         {
             auto &param = response->params[i];
 
@@ -234,6 +237,30 @@ private:
             }
 
         }
+
+        transactions.execute();
+
+        // Update param value for GET transaction type from opencn_params to response
+        for (size_t i = 0; i < response->params.size(); i++) {
+            if (response->params[i].transaction_type == opencn_communication_interfaces::msg::Param::GET) {
+                if(response->params[i].param_class == opencn_communication_interfaces::msg::Param::CMPARAMI32){
+                    response->params[i].cmparami32.value = ((CMParamI32*)opencn_params[i])->get();
+                } else if (response->params[i].param_class == opencn_communication_interfaces::msg::Param::CMPARAMU32){
+                    response->params[i].cmparamu32.value = ((CMParamU32*)opencn_params[i])->get();
+                } else if (response->params[i].param_class == opencn_communication_interfaces::msg::Param::CMPARAMBIT){
+                    response->params[i].cmparambit.value = ((CMParamBit*)opencn_params[i])->get();
+                } else if (response->params[i].param_class == opencn_communication_interfaces::msg::Param::CMPARAMFLOAT){
+                    response->params[i].cmparamfloat.value = ((CMParamFloat*)opencn_params[i])->get();
+                } else {
+                    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Unknown param class");
+                    response->success = false;
+                    return;
+                }
+            }
+        }
+
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Params callback success");
+        response->success = true;
 
     }
                 

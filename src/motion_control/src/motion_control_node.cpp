@@ -4,9 +4,11 @@
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joy.hpp"
 #include "opencn_communication_interfaces/srv/pins.hpp"
+#include "opencn_communication_interfaces/srv/params.hpp"
 #include "opencn_communication_interfaces/srv/init.hpp"
 
 using Pin = opencn_communication_interfaces::msg::Pin;
+using Param = opencn_communication_interfaces::msg::Param;
 
 class MotionControlNode : public rclcpp::Node
 {
@@ -16,6 +18,8 @@ public:
         init_client = this->create_client<opencn_communication_interfaces::srv::Init>("opencn_init");
 
         pin_client = this->create_client<opencn_communication_interfaces::srv::Pins>("opencn_pins");
+
+        params_client = this->create_client<opencn_communication_interfaces::srv::Params>("opencn_params");
 
         joy_sub = this->create_subscription<sensor_msgs::msg::Joy>("joy", 10, std::bind(&MotionControlNode::joy_callback, this, std::placeholders::_1));
     }
@@ -106,25 +110,11 @@ public:
         std::vector<Pin> first_request_pins;
 
         Pin first_request_pin1;
-        first_request_pin1.pin_class = Pin::CMPINFLOAT;
-        first_request_pin1.cmpinfloat.value = 3000;
-        first_request_pin1.name = "basic_pg.best_pg.joint0.max_speed";
+        first_request_pin1.pin_class = Pin::CMPINBIT;
+        first_request_pin1.cmpinbit.value = true;
+        first_request_pin1.name = "lcec.0.EPOS4.set-mode-csv";
         first_request_pin1.transaction_type = Pin::SET;
         first_request_pins.push_back(first_request_pin1);
-
-        Pin first_request_pin2;
-        first_request_pin2.pin_class = Pin::CMPINFLOAT;
-        first_request_pin2.cmpinfloat.value = 100;
-        first_request_pin2.name = "basic_pg.best_pg.joint0.max_accel";
-        first_request_pin2.transaction_type = Pin::SET;
-        first_request_pins.push_back(first_request_pin2);
-
-        Pin first_request_pin3;
-        first_request_pin3.pin_class = Pin::CMPINBIT;
-        first_request_pin3.cmpinbit.value = 1;
-        first_request_pin3.name = "basic_pg.best_pg.enable";
-        first_request_pin3.transaction_type = Pin::SET;
-        first_request_pins.push_back(first_request_pin3);
 
         first_request->pins = first_request_pins;
 
@@ -142,6 +132,108 @@ public:
         
         // Wait for the result.
         if(first_future_result.valid()){
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Parameters service call was successful");
+        } else {
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Parameters service call error");
+            return false;
+        }
+
+        // Wait 1 second to be sure that the device is in the right mode
+        rclcpp::sleep_for(std::chrono::seconds(1));
+
+        // Create a request to set the parameters
+        auto second_request = std::make_shared<opencn_communication_interfaces::srv::Params::Request>();
+
+        // Array of Params
+        std::vector<Param> second_request_params;
+
+        Param second_request_param1;
+        second_request_param1.param_class = Param::CMPARAMI32;
+        second_request_param1.cmparamfloat.value = 1;
+        second_request_param1.name = "basic_pg.best_pg.control_mode";
+        second_request_param1.transaction_type = Param::SET;
+        second_request_params.push_back(second_request_param1);
+
+        Param second_request_param2;
+        second_request_param2.param_class = Param::CMPARAMI32;
+        second_request_param2.cmparamfloat.value = 0;
+        second_request_param2.name = "basic_pg.best_pg.command_type";
+        second_request_param2.transaction_type = Param::SET;
+        second_request_params.push_back(second_request_param2);
+
+        Param second_request_param3;
+        second_request_param3.param_class = Param::CMPARAMBIT;
+        second_request_param3.cmparambit.value = 1;
+        second_request_param3.name = "basic_pg.best_pg.continus";
+        second_request_param3.transaction_type = Param::SET;
+        second_request_params.push_back(second_request_param3);
+
+        second_request->params = second_request_params;
+
+        // Wait for the service to be available
+        while (!params_client->wait_for_service(std::chrono::seconds(1))) {
+            if (!rclcpp::ok()) {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                return false;
+            }
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Pins service not available, waiting again...");
+        }
+
+        // Call the service
+        auto second_future_result = params_client->async_send_request(second_request);
+        
+        // Wait for the result.
+        if(second_future_result.valid()){
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Parameters service call was successful");
+        } else {
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Parameters service call error");
+            return false;
+        }
+
+
+        // Create a request to set the parameters
+        auto third_request = std::make_shared<opencn_communication_interfaces::srv::Pins::Request>();
+
+        // Array of Pin
+        std::vector<Pin> third_request_pins;
+
+        Pin third_request_pin1;
+        third_request_pin1.pin_class = Pin::CMPINFLOAT;
+        third_request_pin1.cmpinfloat.value = 3000;
+        third_request_pin1.name = "basic_pg.best_pg.joint0.max_speed";
+        third_request_pin1.transaction_type = Pin::SET;
+        third_request_pins.push_back(third_request_pin1);
+
+        Pin third_request_pin2;
+        third_request_pin2.pin_class = Pin::CMPINFLOAT;
+        third_request_pin2.cmpinfloat.value = 100;
+        third_request_pin2.name = "basic_pg.best_pg.joint0.max_accel";
+        third_request_pin2.transaction_type = Pin::SET;
+        third_request_pins.push_back(third_request_pin2);
+
+        Pin third_request_pin3;
+        third_request_pin3.pin_class = Pin::CMPINBIT;
+        third_request_pin3.cmpinbit.value = 1;
+        third_request_pin3.name = "basic_pg.best_pg.enable";
+        third_request_pin3.transaction_type = Pin::SET;
+        third_request_pins.push_back(third_request_pin3);
+
+        third_request->pins = third_request_pins;
+
+        // Wait for the service to be available
+        while (!pin_client->wait_for_service(std::chrono::seconds(1))) {
+            if (!rclcpp::ok()) {
+                RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Interrupted while waiting for the service. Exiting.");
+                return false;
+            }
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Pins service not available, waiting again...");
+        }
+
+        // Call the service
+        auto third_future_result = pin_client->async_send_request(third_request);
+        
+        // Wait for the result.
+        if(third_future_result.valid()){
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Parameters service call was successful");
         } else {
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Parameters service call error");
@@ -364,6 +456,9 @@ private:
 
     // Pins service
     rclcpp::Client<opencn_communication_interfaces::srv::Pins>::SharedPtr pin_client;
+
+    // Params service
+    rclcpp::Client<opencn_communication_interfaces::srv::Params>::SharedPtr params_client;
 
 
 };
