@@ -1,0 +1,14 @@
+#! /bin/sh
+# chkconfig: 345 99 10
+case "$1" in
+  start)
+        cd /root
+        #/usr/local/bin/halcmd -f /root/epos4/epos4.hal
+        #/usr/local/bin/halcmd -f /root/basic_pg_test/basic_pg.hal
+        /root/basic_pg_test/start.sh
+        /root/cmctl-server &
+    ;;
+  *)
+    ;;
+esac
+exit 0

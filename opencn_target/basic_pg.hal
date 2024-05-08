@@ -1,0 +1,43 @@
+# EPOS4 basic HAL / use for basic tests with help of 'simple-pg'
+
+## -- load components -- ##
+load lcec cfg=basic_pg_test/epos4_ec.xml
+load basic_pg name=best_pg numjoint=1
+load mux name=mux2 type=float vector_nr=2 vector_size=1
+load sampler --cfg=ffffb --depth=4000 --name=memory
+
+## -- Signal creation -- ##
+
+# PG/joint0 --> CSP
+net cmd-out     basic_pg.best_pg.joint0.cmd_out      => mux.mux2.vector0.input0
+net actual-pos  basic_pg.best_pg.joint0.actual_pos   <= lcec.0.EPOS4.actual-position
+net actual-vel  basic_pg.best_pg.joint0.actual_speed <= lcec.0.EPOS4.actual-velocity
+# net cmd-in      basic_pg.best_pg.joint0.cmd_in
+# net start       basic_pg.best_pg.joint0.start
+
+# MUX output connected with epos4 command PIN
+net target mux.mux2.output0 => lcec.0.EPOS4.set-target
+
+# Sampler connections
+net actual-pos  sampler.memory.pin.0
+net actual-vel  sampler.memory.pin.1
+net cmd-in      sampler.memory.pin.2
+net cmd-out     sampler.memory.pin.3
+net start       sampler.memory.pin.4
+
+# -- Environment configuration -- #
+
+# Position - target is in number of turn
+setp lcec.0.EPOS4.pos-scale 8192
+
+
+
+## -- Export functions -- ##
+
+addf basic_pg.best_pg.func   lcec_thread.0
+addf mux.mux2_func lcec_thread.0
+addf sampler.memory lcec_thread.0
+
+## -- Start operations -- ##
+
+start
