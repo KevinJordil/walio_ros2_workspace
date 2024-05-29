@@ -34,6 +34,6 @@ Le package Joy
 
 Il est également possible de lancer les trois nœuds en même temps avec le fichier de lancement :
 
-.. todo::
+.. code-block:: bash
 
-    Faire le launch file
+    ros2 launch ./launch/opencn_joy.py
