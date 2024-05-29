@@ -1,9 +1,21 @@
+import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, LogInfo, TimerAction
-from launch.substitutions import LaunchConfiguration
+from launch.actions import DeclareLaunchArgument, LogInfo, TimerAction, IncludeLaunchDescription, ExecuteProcess
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration, ThisLaunchFileDir, FindExecutable
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
+    
+    kortex_bringup_share = FindPackageShare('kortex_bringup').find('kortex_bringup')
+    teleop_twist_joy_config = os.path.join(
+        os.getcwd(), 'launch', 'teleop.yaml'
+    )
+
+    teleop_launch_file = os.path.join(os.getcwd(), 'launch', 'teleop-launch.py')
+
+    
     return LaunchDescription([
         # Arguments for kortex_bringup launch file
         DeclareLaunchArgument(
@@ -21,51 +33,36 @@ def generate_launch_description():
             default_value='6',
             description='Degrees of freedom of the robot'
         ),
-
-        # Launching kortex_bringup
-        Node(
-            package='kortex_bringup',
-            executable='gen3.launch.py',
-            name='kortex_bringup',
-            output='screen',
-            parameters=[{
+        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource([
+                kortex_bringup_share, '/launch/gen3.launch.py'
+            ]),
+            launch_arguments={
                 'robot_ip': LaunchConfiguration('robot_ip'),
                 'robot_type': LaunchConfiguration('robot_type'),
                 'dof': LaunchConfiguration('dof')
-            }]
+            }.items()
         ),
-
-        # Timer to delay service call until the controllers are ready
+        
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(teleop_launch_file)
+        ),
+        
         TimerAction(
-            period=5.0,
+            period=10.0,
             actions=[
                 LogInfo(msg="Switching controllers..."),
-                Node(
-                    package='controller_manager',
-                    executable='spawner',
-                    name='switch_controller_service',
-                    output='screen',
-                    arguments=[
-                        '--ros-args',
-                        '--param', 'service_name:=/controller_manager/switch_controller',
-                        '--param', 'activate_controllers:=["twist_controller"]',
-                        '--param', 'deactivate_controllers:=["joint_trajectory_controller"]',
-                        '--param', 'strictness:=1',
-                        '--param', 'activate_asap:=true'
-                    ]
-                )
+                ExecuteProcess(
+                    cmd=[
+                        'ros2 service call ',
+                        '/controller_manager/switch_controller ',
+                        'controller_manager_msgs/srv/SwitchController ', 
+                        '"{activate_controllers: [twist_controller], deactivate_controllers: [joint_trajectory_controller], strictness: 1, activate_asap: true}"'
+                    ],
+                    shell=True
+                ),
             ]
-        ),
-
-        # Launching teleop_twist_joy
-        Node(
-            package='teleop_twist_joy',
-            executable='teleop-launch.py',
-            name='teleop_twist_joy',
-            output='screen',
-            parameters=[{
-                'joy_config': 'xbox',
-                'config_filepath': './launch/teleop.yaml'
-            }]
         )
+        
     ])

@@ -11,7 +11,8 @@ def generate_launch_description():
         Node(
             package='joy',
             executable='joy_node',
-            name='joy_node'
+            name='joy_node',
+            parameters=['./launch/joy_config.yaml']
         ),
         Node(
             package='motion_control',
