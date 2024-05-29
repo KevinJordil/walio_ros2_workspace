@@ -8,7 +8,7 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     
-    kortex_bringup_share = FindPackageShare('kortex_bringup').find('kortex_bringup')
+    kortex_bringup_share = FindPackageShare('kinova_gen3_6dof_robotiq_2f_85_moveit_config').find('kinova_gen3_6dof_robotiq_2f_85_moveit_config')
     teleop_twist_joy_config = os.path.join(
         os.getcwd(), 'launch', 'teleop.yaml'
     )
@@ -36,7 +36,7 @@ def generate_launch_description():
         
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([
-                kortex_bringup_share, '/launch/gen3.launch.py'
+                kortex_bringup_share, '/launch/robot.launch.py'
             ]),
             launch_arguments={
                 'robot_ip': LaunchConfiguration('robot_ip'),
