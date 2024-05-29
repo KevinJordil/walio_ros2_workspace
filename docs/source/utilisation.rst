@@ -31,6 +31,8 @@ Le package Joy
 
     ros2 run joy joy_node
 
+Fichier de lancement
+--------------------
 
 Il est également possible de lancer les trois nœuds en même temps avec le fichier de lancement :
 
