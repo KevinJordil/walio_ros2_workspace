@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jetson Orin &mdash; Documentation Walio ROS2 Workspace 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css?v=5c84f910" />
+      <link rel="stylesheet" type="text/css" href="_static/css/hacks.css?v=41e1d6ec" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=05dadb3a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script src="_static/translations.js?v=bf059b8c"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=ffc8af2d"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Prérequis" href="prerequis.html" />
+    <link rel="prev" title="Documentation de Walio ROS2 Workspace" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Walio ROS2 Workspace
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Jetson Orin</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequis">Prérequis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#systeme-d-exploitation">Système d’exploitation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sdk-manager">SDK Manager</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#preparation">Préparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prerequis.html">Prérequis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compilation.html">Compilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utilisation.html">Utilisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cicd.html">CI/CD</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Walio ROS2 Workspace</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Jetson Orin</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/jetson.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="jetson-orin">
+<h1>Jetson Orin<a class="headerlink" href="#jetson-orin" title="Lien vers cette rubrique"></a></h1>
+<p>Dans le cadre du projet, Ubuntu 22.04 a été installé sur une carte Jetson Orin, spécifiquement sur une carte Seeed Studio reComputer J3011, qui embarque la carte NVIDIA Jetson Orin Nano 8GB.</p>
+<p>Cette section détaille l’installation de Jetpack 6.0, incluant Ubuntu 22.04, sur la carte Jetson Orin.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Au moment de la rédaction de cette documentation, Jetpack 6.0 est uniquement disponible en version Developer Preview.
+Par conséquent, l’installation peut légèrement différer de la version finale.</p>
+</div>
+<section id="prerequis">
+<h2>Prérequis<a class="headerlink" href="#prerequis" title="Lien vers cette rubrique"></a></h2>
+<section id="systeme-d-exploitation">
+<h3>Système d’exploitation<a class="headerlink" href="#systeme-d-exploitation" title="Lien vers cette rubrique"></a></h3>
+<p>Pour installer Jetpack 6.0 sur la carte, un ordinateur avec Ubuntu est requis.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>L’utilisation d’une machine virtuelle n’est pas prise en charge.</p>
+</div>
+</section>
+<section id="sdk-manager">
+<h3>SDK Manager<a class="headerlink" href="#sdk-manager" title="Lien vers cette rubrique"></a></h3>
+<p>Le SDK Manager de NVIDIA sera utilisé, mais il est également possible de procéder à l’installation en ligne de commande.</p>
+<p>Il peut être téléchargé à partir de l’adresse suivante : <a class="reference external" href="https://developer.nvidia.com/sdk-manager">https://developer.nvidia.com/sdk-manager</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Un compte développeur NVIDIA est nécessaire pour télécharger le SDK Manager et pour se connecter à celui-ci.</p>
+</div>
+</section>
+</section>
+<section id="preparation">
+<h2>Préparation<a class="headerlink" href="#preparation" title="Lien vers cette rubrique"></a></h2>
+<p>Un jumper doit être ajouté à la carte Jetson Orin pour activer le mode recovery.</p>
+<a class=""
+               data-lightbox="group-c9c37fdd-5c40-4baa-928b-38fc9aee0f26"
+               href="_images/jumper.png"
+               title=""
+               data-title=""
+               
+               ><img src="_images/jumper.png"
+                     class="align-center"
+                     width="100%"
+                     height="auto"
+                     alt="Jumper"/>
+                </a><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Lien vers cette rubrique"></a></h2>
+<p>Tout d’abord, connectez la carte Jetson Orin à l’ordinateur via un câble USB-C et assurez-vous qu’elle est alimentée.
+Utilisez la commande <code class="code highlight bash docutils literal highlight-bash">lsusb</code> pour vérifier si la carte est reconnue.</p>
+<a class=""
+               data-lightbox="group-6658e5b6-021a-40f6-911f-c86c10cdc0a5"
+               href="_images/lsusb.png"
+               title=""
+               data-title=""
+               
+               ><img src="_images/lsusb.png"
+                     class="align-center"
+                     width="100%"
+                     height="auto"
+                     alt="lsusb"/>
+                </a><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Ensuite, lancez le SDK Manager et connectez-vous avec votre compte développeur NVIDIA.</p>
+<p>Normalement, le SDK Manager devrait reconnaître la carte Jetson Orin.
+Vous pouvez ensuite sélectionner la version de Jetson Orin.</p>
+<a class=""
+               data-lightbox="group-bb11390f-f3f8-4083-99d0-3ad988811d22"
+               href="_images/step1_select_jetson_orin.png"
+               title=""
+               data-title=""
+               
+               ><img src="_images/step1_select_jetson_orin.png"
+                     class="align-center"
+                     width="100%"
+                     height="auto"
+                     alt="Select Jetson Orin version"/>
+                </a><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Ensuite, choisissez la version de Jetpack 6.0.</p>
+<a class=""
+               data-lightbox="group-cc988236-f45b-4659-afd6-dd3a52551f36"
+               href="_images/step1_default.png"
+               title=""
+               data-title=""
+               
+               ><img src="_images/step1_default.png"
+                     class="align-center"
+                     width="100%"
+                     height="auto"
+                     alt="Select Jetpack 6.0"/>
+                </a><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Voici les composants à sélectionner pour la phase 2 de l’installation.</p>
+<a class=""
+               data-lightbox="group-23458193-a5e0-462a-8867-1b22773d7a93"
+               href="_images/step2.png"
+               title=""
+               data-title=""
+               
+               ><img src="_images/step2.png"
+                     class="align-center"
+                     width="100%"
+                     height="auto"
+                     alt="Step 2"/>
+                </a><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Pour les étapes suivantes de l’installation, vous pouvez conserver les options par défaut.</p>
+<p>Une fois l’installation terminée, retirez le jumper de la carte Jetson Orin et redémarrez-la.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="index.html" class="btn btn-neutral float-left" title="Documentation de Walio ROS2 Workspace" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="prerequis.html" class="btn btn-neutral float-right" title="Prérequis" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Kevin Jordil.
+      <span class="lastupdated">Mis à jour le 29 mai 2024, avec ♥.
+      </span></p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

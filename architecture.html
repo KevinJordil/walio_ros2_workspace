@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture &mdash; Documentation Walio ROS2 Workspace 1.0.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css?v=5c84f910" />
+      <link rel="stylesheet" type="text/css" href="_static/css/hacks.css?v=41e1d6ec" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=05dadb3a"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script src="_static/translations.js?v=bf059b8c"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=ffc8af2d"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="CI/CD" href="cicd.html" />
+    <link rel="prev" title="Utilisation" href="utilisation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Walio ROS2 Workspace
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="jetson.html">Jetson Orin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequis.html">Prérequis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="compilation.html">Compilation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utilisation.html">Utilisation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#noeud-opencn">Nœud OpenCN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#noeud-opencn-communication-interface">Nœud OpenCN communication interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#service-pins">Service Pins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#service-params">Service Params</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#noeud-motion-control">Nœud Motion Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#noeud-joy">Nœud Joy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cicd.html">CI/CD</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Walio ROS2 Workspace</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Architecture</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="architecture">
+<h1>Architecture<a class="headerlink" href="#architecture" title="Lien vers cette rubrique"></a></h1>
+<p>Une solution générique a été mise en place pour faciliter la communication entre les divers composants.
+Son principal avantage réside dans sa capacité à permettre une réutilisation aisée des composants dans d’autres projets, avec peu ou pas d’adaptation nécessaire.</p>
+<p>Ci-dessous, un schéma illustre l’architecture de cette solution :</p>
+<a class=""
+               data-lightbox="group-0c2efc03-56c3-4296-a7b1-4b97dd7392ba"
+               href="_images/architecture.svg"
+               title=""
+               data-title=""
+               
+               ><img src="_images/architecture.svg"
+                     class="align-center"
+                     width="100%"
+                     height="auto"
+                     alt="Architecture"/>
+                </a><div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>ROS introduit le concept de nœud, qui représente un processus capable de communiquer avec d’autres nœuds.
+Dans notre contexte, chaque <span class="blue">composant bleu</span> est un nœud ROS.</p>
+<p>Les <span class="red">liens en rouge</span> correspondent à des topics ROS, facilitant la communication entre les nœuds.
+Chaque topic dispose à la fois d’un subscriber et d’un publisher.</p>
+<p>Les <span class="purple">liens en violet</span> représentent des services ROS, permettant l’appel de fonctions entre les nœuds.
+La direction de la flèche indique le sens de l’appel.
+Les services offrent l’avantage de pouvoir attendre une réponse, offrant ainsi la possibilité de déterminer si l’opération a été un succès ou non.</p>
+<p>Enfin, <span class="black">liens en noir</span> symbolisent les connexions physiques telles que USB, Ethernet, etc., qui permettent la communication avec les différents composants.</p>
+<section id="noeud-opencn">
+<h2>Nœud OpenCN<a class="headerlink" href="#noeud-opencn" title="Lien vers cette rubrique"></a></h2>
+<p>Le nœud OpenCN intègre la partie <code class="code highlight bash docutils literal highlight-bash">host</code> de OpenCN.
+Il permet de communiquer avec le Raspberry Pi qui fonctionne avec la partie <code class="code highlight bash docutils literal highlight-bash">target</code> de OpenCN.
+Plus d’informations sur OpenCN sont disponibles sur le <a class="reference external" href="https://opencn.heig-vd.ch/">site d’OpenCN</a></p>
+<p>Le nœud OpenCN propose deux services pour générer des transactions OpenCN.
+Le premier service nécessite la spécification d’un tableau de pins OpenCN, tandis que le deuxième service requiert un tableau de paramètres.
+Une fois les informations fournies, le nœud OpenCN crée la transaction OpenCN correspondante et la transmet au Raspberry Pi.
+Si la transaction est réalisée avec succès, le service renvoie la valeur booléenne <code class="code highlight bash docutils literal highlight-bash">True</code> à la console.</p>
+</section>
+<section id="noeud-opencn-communication-interface">
+<h2>Nœud OpenCN communication interface<a class="headerlink" href="#noeud-opencn-communication-interface" title="Lien vers cette rubrique"></a></h2>
+<p>Le nœud OpenCN communication interface comprend les messages nécessaires pour échanger des données avec le nœud OpenCN.
+Ces messages ne sont pas directement intégrés dans le nœud OpenCN, afin de faciliter leur réutilisation dans d’autres nœuds.
+Ainsi, pour tout nœud nécessitant une communication avec OpenCN, il suffit de déclarer une dépendance vis-à-vis du nœud OpenCN communication interface.</p>
+<p>Pour saisir les définitions suivantes, une compréhension de la structure d’un message ROS est essentielle.
+La documentation disponible à l’adresse suivante explique en détail les interfaces pour les messages et les services : <a class="reference external" href="https://docs.ros.org/en/humble/Concepts/Basic/About-Interfaces.html">https://docs.ros.org/en/humble/Concepts/Basic/About-Interfaces.html</a>.
+De plus, un lien est fourni pour la création de messages ou de services, ce qui facilite la compréhension de leur implémentation : <a class="reference external" href="https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html">https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html</a>.</p>
+<section id="service-pins">
+<h3>Service Pins<a class="headerlink" href="#service-pins" title="Lien vers cette rubrique"></a></h3>
+<p>Le service Pins est un service ROS permettant de transférer plusieurs Pins OpenCN à la fois.
+Structuré comme un tableau d’entrée et de sortie, il prend en entrée des pins OpenCN à envoyer et renvoie en sortie les pins OpenCN reçues, accompagnées d’un booléen indiquant le succès de la transaction.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">srv/Pins.srv</span><a class="headerlink" href="#id1" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Pin[] pins</span>
+<span class="go">---</span>
+<span class="go">Pin[] pins</span>
+<span class="go">bool success</span>
+</pre></div>
+</div>
+</div>
+<p>Le message Pin est un message ROS destiné à transmettre les données relatives à une pin OpenCN.
+Il inclut un attribut <code class="code highlight bash docutils literal highlight-bash">pin_class</code> définissant la classe de la pin (<code class="code highlight bash docutils literal highlight-bash">CMPINI32</code>, <code class="code highlight bash docutils literal highlight-bash">CMPINU32</code>, <code class="code highlight bash docutils literal highlight-bash">CMPINBIT</code> ou, <code class="code highlight bash docutils literal highlight-bash">CMPINFLOAT</code>), suivi d’une pin de chaque type, seul celui approprié étant utilisé en fonction de la classe.
+Le message comporte également un nom et un champ <code class="code highlight bash docutils literal highlight-bash">transaction_type</code> pouvant être <code class="code highlight bash docutils literal highlight-bash">GET</code> ou <code class="code highlight bash docutils literal highlight-bash">SET</code>.
+Le message contient également des constantes qui augmentent la lisibilité du code.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">msg/Pin.msg</span><a class="headerlink" href="#id2" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">uint8 pin_class</span>
+<span class="go">uint8 CMPINI32=0</span>
+<span class="go">uint8 CMPINU32=1</span>
+<span class="go">uint8 CMPINBIT=2</span>
+<span class="go">uint8 CMPINFLOAT=3</span>
+
+<span class="go">CMPinI32 cmpini32</span>
+<span class="go">CMPinU32 cmpinu32</span>
+<span class="go">CMPinBit cmpinbit</span>
+<span class="go">CMPinFloat cmpinfloat</span>
+
+<span class="go">string name</span>
+
+<span class="go">uint8 transaction_type</span>
+<span class="go">uint8 GET=0</span>
+<span class="go">uint8 SET=1</span>
+</pre></div>
+</div>
+</div>
+<p>Enfin, chaque classe (<code class="code highlight bash docutils literal highlight-bash">CMPINI32</code>, <code class="code highlight bash docutils literal highlight-bash">CMPINU32</code>, <code class="code highlight bash docutils literal highlight-bash">CMPINBIT</code> ou, <code class="code highlight bash docutils literal highlight-bash">CMPINFLOAT</code>) est un message contenant une valeur correspondante au type.</p>
+<p>Message de la classe <code class="code highlight bash docutils literal highlight-bash">CMPINI32</code> :</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">msg/CMPinI32.msg</span><a class="headerlink" href="#id3" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">int32 value</span>
+</pre></div>
+</div>
+</div>
+<p>Message de la classe <code class="code highlight bash docutils literal highlight-bash">CMPINU32</code> :</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">msg/CMPinU32.msg</span><a class="headerlink" href="#id4" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">uint32 value</span>
+</pre></div>
+</div>
+</div>
+<p>Message de la classe <code class="code highlight bash docutils literal highlight-bash">CMPINBIT</code> :</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">msg/CMPinBit.msg</span><a class="headerlink" href="#id5" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bool value</span>
+</pre></div>
+</div>
+</div>
+<p>Message de la classe <code class="code highlight bash docutils literal highlight-bash">CMPINFLOAT</code> :</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">msg/CMPinFloat.msg</span><a class="headerlink" href="#id6" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">float64 value</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="service-params">
+<h3>Service Params<a class="headerlink" href="#service-params" title="Lien vers cette rubrique"></a></h3>
+<p>Le service Params est une service ROS permettant de transférer plusieurs Params OpenCN à la fois.
+Structuré comme un tableau d’entrée et de sortie, il prend en entrée des params OpenCN à envoyer et renvoie en sortie les params OpenCN reçues, accompagnées d’un booléen indiquant le succès de la transaction.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">srv/Params.srv</span><a class="headerlink" href="#id7" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Params[] params</span>
+<span class="go">---</span>
+<span class="go">Params[] params</span>
+<span class="go">bool success</span>
+</pre></div>
+</div>
+</div>
+<p>Le message Param est un message ROS destiné à transmettre les données relatives à un param OpenCN.
+Il inclut un attribut <code class="code highlight bash docutils literal highlight-bash">param_class</code> définissant la classe du param (<code class="code highlight bash docutils literal highlight-bash">CMPARAMI32</code>, <code class="code highlight bash docutils literal highlight-bash">CMPARAMU32</code>, <code class="code highlight bash docutils literal highlight-bash">CMPARAMBIT</code> ou, <code class="code highlight bash docutils literal highlight-bash">CMPARAMFLOAT</code>), suivi d’un param de chaque type, seul celui approprié étant utilisé en fonction de la classe.
+Le message comporte également un nom et un champ <code class="code highlight bash docutils literal highlight-bash">transaction_type</code> pouvant être <code class="code highlight bash docutils literal highlight-bash">GET</code> ou <code class="code highlight bash docutils literal highlight-bash">SET</code>.
+Le message contient également des constantes qui augmentent la lisibilité du code.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">msg/Param.msg</span><a class="headerlink" href="#id8" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">uint8 param_class</span>
+<span class="go">uint8 CMPARAMI32=0</span>
+<span class="go">uint8 CMPARAMU32=1</span>
+<span class="go">uint8 CMPARAMBIT=2</span>
+<span class="go">uint8 CMPARAMFLOAT=3</span>
+
+<span class="go">CMParamI32 cmparami32</span>
+<span class="go">CMParamU32 cmparamu32</span>
+<span class="go">CMParamBit cmparambit</span>
+<span class="go">CMParamFloat cmparamfloat</span>
+
+<span class="go">string name</span>
+
+<span class="go">uint8 transaction_type</span>
+<span class="go">uint8 GET=0</span>
+<span class="go">uint8 SET=1</span>
+</pre></div>
+</div>
+</div>
+<p>Enfin, chaque classe (<code class="code highlight bash docutils literal highlight-bash">CMPARAMI32</code>, <code class="code highlight bash docutils literal highlight-bash">CMPARAMU32</code>, <code class="code highlight bash docutils literal highlight-bash">CMPARAMBIT</code> ou, <code class="code highlight bash docutils literal highlight-bash">CMPARAMFLOAT</code>) est un message contenant une valeur correspondante au type.</p>
+<p>Message de la classe <code class="code highlight bash docutils literal highlight-bash">CMParamI32</code> :</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">msg/CMParamI32.msg</span><a class="headerlink" href="#id9" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">int32 value</span>
+</pre></div>
+</div>
+</div>
+<p>Message de la classe <code class="code highlight bash docutils literal highlight-bash">CMParamU32</code> :</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">msg/CMParamU32.msg</span><a class="headerlink" href="#id10" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">uint32 value</span>
+</pre></div>
+</div>
+</div>
+<p>Message de la classe <code class="code highlight bash docutils literal highlight-bash">CMParamBit</code> :</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">msg/CMParamBit.msg</span><a class="headerlink" href="#id11" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bool value</span>
+</pre></div>
+</div>
+</div>
+<p>Message de la classe <code class="code highlight bash docutils literal highlight-bash">CMParamFloat</code> :</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">msg/CMParamFloat.msg</span><a class="headerlink" href="#id12" title="Lien vers ce code"></a></div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">float64 value</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="noeud-motion-control">
+<h2>Nœud Motion Control<a class="headerlink" href="#noeud-motion-control" title="Lien vers cette rubrique"></a></h2>
+<p>Le nœud Motion Control permet de gérer ce qui doit être fait par rapport aux entrées.
+Dans le cas actuel, il prend en entrée les valeurs du contrôleur Xbox et les transforme en consignes compatibles avec OpenCN (Pins).</p>
+<p>Actuellement, le joystick gauche permet de contrôler la vitesse du moteur avec un profil de type vélocité.</p>
+<p>Si à l’avenir, les déplacements doivent être gérés de manière autonome, il faudra modifier ce nœud pour prendre en compte les données des capteurs et les consignes de déplacement.</p>
+</section>
+<section id="noeud-joy">
+<h2>Nœud Joy<a class="headerlink" href="#noeud-joy" title="Lien vers cette rubrique"></a></h2>
+<p>Le nœud Joy permet de récupérer les données du contrôleur Xbox et de les publier sur un topic ROS.</p>
+<p>La manière de connexion n’est pas gérée dans ce nœud.
+Si dans le futur, l’option sans fil est choisie, il faut connecter le contrôleur Xbox en Bluetooth au système d’exploitation.</p>
+<p>Ce nœud est un nœud ROS standard.
+La documentation de ce nœud est disponible <a class="reference external" href="https://index.ros.org/p/joy/">ici</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="utilisation.html" class="btn btn-neutral float-left" title="Utilisation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="cicd.html" class="btn btn-neutral float-right" title="CI/CD" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Kevin Jordil.
+      <span class="lastupdated">Mis à jour le 29 mai 2024, avec ♥.
+      </span></p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
